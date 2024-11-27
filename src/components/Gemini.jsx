@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-export default function Gemini(props) {
+export default function Gemini({ mode, setMarkdown }) {
   const [prompt, setPrompt] = useState('');
-  const [response, setResponse] = useState('');
   const [loading, setLoading] = useState(false);
 
   // Initialize the API and model
@@ -24,29 +23,13 @@ export default function Gemini(props) {
 
   // System instruction
   const systemInstruction = `
-    From now on, for every prompt I give you:
-    - Create a README file in Markdown format.
-    - Use the following rules:
-      1. Start with the title in \`# Title\` format.
-      2. Add an introductory description after the title.
-      3. Include a \`## Table of Contents\` section listing all headings using bullet points (\`-\`), linking to sections below.
-      4. Use \`##\` for section headings.
-      5. For "Getting Started," use ordered lists (\`1.\`, \`2.\`, etc.) for step-by-step instructions.
-      6. For "Features," use bullet points (\`-\`) to list highlights.
-      7. Include example code snippets in a code block (use triple backticks: \`\`\`).
-      8. Format all links as \`[text](URL)\`.
-      9. End with a "License" section mentioning the type of license.
-      After each point being covered, add a line break (\`\\n\`). eg:- 
-      # Title line break
-      Description line break
-      ## Table of Contents line break 
-      - Points for the respective sections 
-      ## Getting Started line break 
-      1. Steps for getting started line break 
-      2. Steps for getting started and so on
+    Create a README file in Markdown format with the following rules:
+    - Start with the title in \`# Title\` format.
+    - Use bullet points (\`-\`) and numbered lists (\`1., 2., etc.\`) as required.
+    - Ensure Markdown formatting is clean and adheres to standards.
   `;
 
-  // Function to handle prompt submission
+  // Handle prompt submission
   const handlePromptSubmit = async () => {
     setLoading(true);
     try {
@@ -55,63 +38,43 @@ export default function Gemini(props) {
         history: [],
       });
 
-      // Prepend the system instruction to the user prompt
       const finalPrompt = `${systemInstruction}\n\n${prompt}`;
-
       const result = await chatSession.sendMessage(finalPrompt);
-      setResponse(result.response.text());
+
+      // Append the generated content to the existing markdown
+      setMarkdown((prevMarkdown) => `${prevMarkdown}\n\n${result.response.text()}`);
     } catch (error) {
       console.error("Error with Gemini API:", error);
-      setResponse("Failed to fetch response. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div
-      className={`gemini text-${props.mode === 'black' ? 'white' : 'black'} gap-10 p-5`}
-    >
-      {/* Prompt Section */}
-      <span className="text-lg font-bold text- mb-2 align-left">Prompt</span>
+    <div className={`p-5 bg-${mode === 'black' ? 'gray-900' : 'gray-100'} text-${mode === 'black' ? 'white' : 'black'}`}>
+      <span className="text-lg font-bold mb-2">Prompt</span>
       <textarea
-        className={`border-radius-50px form-control w-full p-2 border ${
-          props.mode === "black"
-            ? "bg-black text-white border-2 border-white"
-            : "bg-white text-black border-2 border-black"
-        } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
-        style={{ borderRadius: '10px' }}
+        className={`form-control w-full p-2 rounded-md focus:outline-none focus:ring-2 ${
+          mode === 'black'
+            ? 'bg-gray-800 text-white focus:ring-blue-500'
+            : 'bg-gray-200 text-black focus:ring-blue-500'
+        }`}
         rows="5"
         placeholder="Your Prompt here"
         value={prompt}
         onChange={(e) => setPrompt(e.target.value)}
       />
-
-      {/* Submit Button */}
       <button
-        className={`mt-4 px-4 py-2 ${
-          props.mode === "black" ? "bg-blue-500 text-white" : "bg-blue-700 text-black"
-        } rounded-md`}
+        className={`mt-4 px-4 py-2 rounded-md ${
+          mode === 'black'
+            ? 'bg-blue-600 hover:bg-blue-700 text-white'
+            : 'bg-blue-400 hover:bg-blue-500 text-black'
+        }`}
         onClick={handlePromptSubmit}
         disabled={loading}
       >
-        {loading ? "Generating..." : "Submit"}
+        {loading ? 'Loading...' : 'Generate README'}
       </button>
-
-      {/* Response Section */}
-      <div className="mt-6">
-        <span className="text-lg font-bold text- mb-2 align-left">Response</span>
-        <div
-          className={`form-control w-full p-4 border ${
-            props.mode === "black"
-              ? "bg-black text-white border-2 border-white"
-              : "bg-white text-black border-2 border-black"
-          } rounded-md`}
-          style={{ borderRadius: '10px', minHeight: '100px' }}
-        >
-          {response || "Your response will appear here."}
-        </div>
-      </div>
     </div>
   );
 }
