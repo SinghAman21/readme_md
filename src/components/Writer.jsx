@@ -57,7 +57,8 @@ export default function Writer(props) {
             } w-full pl-2 border rounded-md overflow-auto h-[70vh]`}
             style={{ borderRadius: '10px' }}
           >
-            <ReactMarkdown>{markDown}</ReactMarkdown>
+            <ReactMarkdown 
+            style={{ color: props.mode === 'black' ? 'white' : 'black'}}>{markDown}</ReactMarkdown>
           </div>
         </div>
       </div>
