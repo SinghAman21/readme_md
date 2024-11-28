@@ -1,42 +1,193 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+nav > div {
+	@apply flex items-center justify-between;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+svg {
+	@apply text-black/80 dark:text-white/80 hover:opacity-70 transition-opacity ease-linear;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+textarea {
+	@apply relative font-sans font-medium w-full resize-none px-5 py-3 shadow-none  bg-blue-200/50 dark:bg-[#0a0c0e]/50  transition-all duration-500 ease-linear border-1;
+}
+
+.border-1{
+	@apply border-[0.1px] border-solid dark:border-[#ffffff18] border-[#00000018];
+}
+
+/* General styles for Markdown content */
+.preview {
+	font-family: 'Inter', sans-serif;
+	line-height: 1.8;
+	color: #333;
+	/* justify-content:; */
+	text-align: left;
   }
-  to {
-    transform: rotate(360deg);
+  
+  /* Headings with anchor links */
+  .preview h1,
+  .preview h2,
+  .preview h3,
+  .preview h4,
+  .preview h5,
+  .preview h6 {
+	font-weight: bold;
+	margin: 1em 0 0.5em;
+	position: relative;
+	scroll-margin-top: 80px; /* For better scroll offset */
   }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  
+  .preview h1 {
+	font-size: 2rem;
+	border-bottom: 2px solid #ccc;
+	padding-bottom: 0.2em;
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
+  
+  .preview h2 {
+	font-size: 1.75rem;
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 0.2em;
+  }
+  
+  .preview h3 {
+	font-size: 1.5rem;
+  }
+  
+  .preview h4 {
+	font-size: 1.25rem;
+  }
+  
+  .preview h5 {
+	font-size: 1.1rem;
+  }
+  
+  .preview h6 {
+	font-size: 1rem;
+	color: #555;
+  }
+  
+  /* Add an anchor link (icon) below each heading */
+  .preview h1::after,
+  .preview h2::after,
+  .preview h3::after,
+  .preview h4::after,
+  .preview h5::after,
+  .preview h6::after {
+	/* content: '🔗'; You can use an anchor icon here */
+	font-size: 0.9rem;
+	color: #888;
+	position: absolute;
+	right: -25px;
+	top: 50%;
+	transform: translateY(-50%);
+	cursor: pointer;
+  }
+  
+  .preview h1:hover::after,
+  .preview h2:hover::after,
+  .preview h3:hover::after,
+  .preview h4:hover::after,
+  .preview h5:hover::after,
+  .preview h6:hover::after {
+	color: #000;
+  }
+  
+  /* Paragraphs */
+  .preview p {
+	margin: 0.5em 0;
+	color: #444;
+  }
+  
+  /* Lists */
+  .preview ul {
+	padding-left: 1.5em;
+	list-style-type: disc;
+	margin-bottom: 1em;
+  }
+  
+  .preview ol {
+	padding-left: 1.5em;
+	list-style-type: decimal;
+	margin-bottom: 1em;
+  }
+  
+  .preview li {
+	margin: 0.3em 0;
+  }
+  
+  /* Blockquotes */
+  .preview blockquote {
+	border-left: 4px solid #ccc;
+	padding-left: 1em;
+	margin: 1em 0;
+	color: #666;
+	font-style: italic;
+  }
+  
+  /* Inline code */
+  .preview code {
+	background-color: #f4f4f4;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-family: 'Fira Code', monospace;
+	color: #d6336c; /* A pleasant pink for code */
+  }
+  
+  /* Code blocks */
+  .preview pre {
+	background-color: #1e1e1e; /* Dark background */
+	color: #d4d4d4; /* Light text for contrast */
+	padding: 1em;
+	border-radius: 5px;
+	overflow-x: auto;
+	font-family: 'Fira Code', monospace;
+	margin: 1em 0;
+  }
+  
+  /* Links */
+  .preview a {
+	color: #007acc; /* Tailwind's blue color */
+	text-decoration: underline;
+  }
+  
+  .preview a:hover {
+	color: #005bb5; /* Darker blue for hover state */
+	text-decoration: none;
+  }
+  
+  /* Tables */
+  .preview table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 1em 0;
+	border: 1px solid #ddd;
+  }
+  
+  .preview th,
+  .preview td {
+	border: 1px solid #ddd;
+	padding: 0.5em;
+	text-align: left;
+  }
+  
+  .preview th {
+	background-color: #f4f4f4;
+	font-weight: bold;
+  }
+  
+  /* Images */
+  .preview img {
+	max-width: 100%;
+	border-radius: 5px;
+	margin: 1em 0;
+  }
+  
+  .bg-dark{
+	background-color: #1e1e1e;
+  }
+  
+  .basic{
+	background-color: #1e1e1e;
+	height: 10vh;
+	width: 100%;
+	color: white;
+  }
