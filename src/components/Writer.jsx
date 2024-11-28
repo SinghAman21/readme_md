@@ -1,9 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
-import Gemini from './Gemini';
+import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 
-export default function Writer({ mode }) {
+export default function Writer() {
   const [markdown, setMarkdown] = useState('');
+  const [resizeDirection, setResizeDirection] = useState('horizontal');
+
+  useEffect(() => {
+    const handleResize = () => {
+      setResizeDirection(window.innerWidth < 768 ? 'vertical' : 'horizontal');
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Handle dynamic bullet/numbered point behavior in textarea
   const handleOnChange = (event) => {
@@ -23,35 +34,35 @@ export default function Writer({ mode }) {
   };
 
   return (
-    <div className={`flex text-${mode === 'black' ? 'white ' : 'black'} gap-10 p-5 `}>
-      {/* Raw Markdown Input */}
-      <div className="writer w-1/2">
-        <span className="text-lg font-bold mb-2">Raw</span>
-        <textarea
-          className={`form-control w-full p-2 rounded-md focus:outline-none focus:ring-2 ${
-            mode === 'black'
-              ? 'bg-gray-800 text-white focus:ring-blue-500 border-2 border-white'
-              : 'bg-gray-200 text-black focus:ring-blue-500 border-2 border-black'
-          }`}
-          rows="20"
-          cols="50"
-          value={markdown}
-          onChange={handleOnChange}
-          placeholder="Enter your Markdown here"
-        />
-      </div>
-      {/* Markdown Preview */}
-      <div className="preview w-20vw">
-        <span className="text-lg font-bold mb-2">Preview</span>
-        <div
-          className={`form-control w-full p-2 rounded-md overflow-auto h-[70vh] ${
-            mode === 'black' ? 'bg-gray-900 text-white border-2 border-white' : 'bg-gray-100 text-black border-2 border-black'
-          }`}
-        >
-          <ReactMarkdown>{markdown}</ReactMarkdown>
-        </div>
-      </div>
-      <Gemini mode={mode} setMarkdown={setMarkdown} />
+    <div className={`flex px-8 h-full`}>
+      <PanelGroup direction={resizeDirection}>
+        {/* Raw Markdown Input */}
+        <Panel minSize={20} defaultSize={50} collapsible className='overflow-auto'>
+          <div className="writer h-full md:pb-28">
+            <span className="text-base font-semibold">Raw</span>
+            <textarea
+              className="h-full mb-4 mt-2 rounded-lg "
+              value={markdown}
+              onChange={handleOnChange}
+              placeholder="Enter your Markdown here"
+            />
+          </div>
+        </Panel>
+        <PanelResizeHandle className='md:mx-1 md:my-16 my-1 mx-16 bg-black/30 dark:invert 
+        transition-colors ease-linear hover:bg-black/50 md:w-1 w-96 rounded-2xl md:h-96 h-2' />
+        <Panel minSize={20} defaultSize={50} collapsible className='overflow-auto'>
+          {/* Preview */}
+          <div className="preview h-full md:pb-28">
+            <span className="text-base font-semibold dark:text-light text-black">Preview</span>
+            <div
+              className={`mt-[2px] rounded-lg mb-4 form-control w-full px-5 py-3 overflow-auto h-full dark:bg-[#0a0c0e]/50 dark:text-white bg-blue-200/50 border-1 duration-500`}
+            >
+              <ReactMarkdown>{markdown}</ReactMarkdown>
+            </div>
+          </div>
+        </Panel>
+      </PanelGroup>
     </div>
+
   );
 }
