@@ -57,7 +57,9 @@ export default function NavbarComponent({ isMenuOpen, setIsMenuOpen }) {
       </div>
 
       <div className="right flex items-center gap-6">
-        <button className="btn" aria-label="Open GitHub">
+        <button className="btn" aria-label="Open GitHub" 
+        onClick={() => window.open('https://github.com/SinghAman21/readme_md', '_blank')}
+        >
           <VscGithub className='h-6 w-6 ' />
         </button>
         <button

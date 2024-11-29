@@ -6,6 +6,7 @@ import { IoCloudDownloadOutline } from 'react-icons/io5';
 
 export default function Gemini({ setMarkdown }) {
   const [prompt, setPrompt] = useState('');
+  const [loading, setLoading] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const handleMouseEnter = () => setIsHovering(true);
   const handleMouseLeave = () => setIsHovering(false);
@@ -78,11 +79,11 @@ export default function Gemini({ setMarkdown }) {
               transition={{ duration: 0.5, delay: 0.7, ease: 'linear' }}
             >
               <div className="top flex items-center justify-between">
-                <h1 className='font-medium text-lg'>Toolbox</h1>
+                <h1 className='font-medium text-lg'>PromptBox</h1>
                 <div className="flex items-center justify-center gap-3">
-                  <button>
+                  {/* <button>
                     <ArrowsPointingOutIcon className="h-5 w-5" />
-                  </button>
+                  </button> */}
                   {/* <button>
                     <XMarkIcon className="h-6 w-6 hover:text-red-500 transition-colors " onClick={handleMouseLeave} />
                   </button> */}
@@ -153,7 +154,7 @@ export default function Gemini({ setMarkdown }) {
       </motion.div>
       <button className="btn dark:bg-light bg-black p-3 rounded-full border border-solid border-black/50 
       dark:border-white/10 ml-2 z-10">
-        <BoltIcon className='h-6 w-6 text-gray-300 dark:text-black' />
+        <BoltIcon className='h-6 w-6 text-gray-300 dark:text-black' onClick={handlePromptSubmit}/>
       </button>
     </motion.div>
   );

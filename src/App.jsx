@@ -2,7 +2,7 @@ import './App.css'
 import './index.css'
 import Writer from './components/Writer'
 import Navbar from './components/Navbar'
-import Gemini from './components/Gemini'
+// import Gemini from './components/Gemini'
 import Menu from './components/Menu'
 import { useState } from 'react'
 
@@ -15,7 +15,7 @@ function App() {
       <Navbar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
       <Menu isMenuOpen={isMenuOpen} />
       <Writer />
-      <Gemini />
+      {/* <Gemini /> */}
     </div>
   )
 }
