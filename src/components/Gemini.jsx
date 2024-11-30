@@ -154,7 +154,7 @@ export default function Gemini({ setMarkdown }) {
       </motion.div>
       <button className="btn dark:bg-light bg-black p-3 rounded-full border border-solid border-black/50 
       dark:border-white/10 ml-2 z-10">
-        <BoltIcon className='h-6 w-6 text-gray-300 dark:text-black' onClick={handlePromptSubmit}/>
+        <BoltIcon className='h-6 w-6 text-gray-300 dark:text-black' onClick={handlePromptSubmit} onKeyDown={(e) => e.key === 'Enter' && handlePromptSubmit()}/>
       </button>
     </motion.div>
   );

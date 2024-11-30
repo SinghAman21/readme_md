@@ -70,7 +70,7 @@ export default function Writer() {
   };
 
   return (
-    <div className={`flex px-8 h-full`}>
+    <div className={`flex px-8 h-full h-[91vh]`}>
       <PanelGroup direction={resizeDirection}>
         {/* Raw Markdown Input */}
         <Panel minSize={20} defaultSize={50} collapsible className="overflow-auto">
@@ -95,7 +95,7 @@ export default function Writer() {
               style={{ opacity: isCopied ? 1 : 0 }}
               initial={{  opacity: 0 }}
               animate={{  opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.7, ease: 'linear' }}
+              transition={{ duration: 0.5, delay: 0.1, ease: 'linear' }}
             >
               Content copied!
             </motion.div>
